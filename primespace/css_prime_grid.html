@@ -1,0 +1,85 @@
+<html>
+<head>
+
+<style>
+body {
+  margin: 0%;
+}
+
+.wrapper {
+  display: grid;
+/*  grid-template-columns: repeat(8, 1fr); */
+    grid-template-columns: repeat(500, [column] 0.18%);
+    grid-template-rows: repeat(500, [row] 0.18% );
+  grid-gap: 0px;
+  background-color: #fff;  
+  padding: 2%;
+}
+
+.box {
+  border-radius: 0em;
+  padding: 0em;
+  width: 0.4em;
+  height: 0.4em;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+</div>
+<script>
+// https://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa 
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+var i;
+var el = document.getElementsByClassName('wrapper')[0];
+var content = '';
+var n = 0;
+
+el.style.width = x;
+el.style.height = y;
+
+function isPrime(num) {
+  for(var i = 2; i < num; i++)
+    if(num % i === 0) return false;
+  return num !== 1;
+}
+
+function showPrime(num) {
+    document.getElementById("viewer").textContent=num;
+}
+
+var t_start = Date.now();
+for (j = 1; j <= 500; j++) {
+    for (i = 1; i <= 500; i++) {
+        n = n + 1;
+        var next = "<div onmouseover = showPrime("+n+") ontouchstart = showPrime("+n+") class='box' style = 'grid-column: "+i+" / "+(i+1)+"; grid-row: "+j+" / "+(j+1)+"; background-color: #"+((1<<24)*Math.random()|0).toString(16)+";'> </div>";
+        
+        if(isPrime(n)){
+            content = content + next;
+        } else {
+            content = content;
+        }
+        
+    }
+}
+var t_end = Date.now();
+
+
+var addon = '<div id = "viewer" style="grid-column: 40 / 140; grid-row: 80 / 160; background-color: #ffcd31; font-size: 300%; text-align: center; z-index: 100;">.</div>\n <div id = "viewer2" style="grid-column: 40 / 140; grid-row: 20 / 60; background-color: #ffcd31; font-size: 100%; text-align: center; z-index: 100;">.</div>'
+
+el.innerHTML = addon + content;
+
+document.getElementById("viewer2").textContent=((t_end-t_start)/1000)+" s";
+</script>
+
+
+
+</body>
+</html>
